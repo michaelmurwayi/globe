@@ -10,10 +10,12 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
     
     const mapContainer = useRef(null);
     const map = useRef(null);
+    const [marker, setMarker] = useState(null)
     const [lng, setLng] = useState(longitude);
     const [lat, setLat] = useState(latitude);
     const [Zoom, setZoom] = useState(zoomRatio);
     
+    const [cursorClass, setCursorClass] = useState('')
 
 
     useEffect(()=>{
@@ -31,32 +33,46 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
             
     })
 
-        return(
-            <div className="row">
-                    <div className="card">
-                        <div className="overlay">
-                            <h2>Location</h2>
-                            <hr/>
-                            <p>Longitude: <b>{lng}</b> </p>
-                            <p>Latitude: <b>{lat}</b> </p>
-                        </div>
-                </div>
-                <div ref={mapContainer} className="map-container" />
-
-            </div>
-            )
-            
-    }
-
-    const mapStateToProps = (state) =>{
-        return{
-            token: state.mapReducer.mapBoxToken,
-            longitude: state.mapReducer.initialViewPoint.longitude,
-            latitude: state.mapReducer.initialViewPoint.latitude,
-            zoomRatio: state.mapReducer.initialViewPoint.zoom
+    
+    
+    const addCountryMarker = (e)=>{
+            if(!map) return;
+            setCursorClass = 'pin-cursor'
         }
+        
+            return(
+                <div className="row">
+                        <div className="card">
+                            <div className="overlay">
+                                <h2>Location</h2>
+                                <hr/>
+                                <p>Longitude: <b>{lng}</b> </p>
+                                <p>Latitude: <b>{lat}</b> </p>
+                            </div>
+                    </div>
+                    <div className="card-2">
+                            <div className="functionality row">
+                                <button className="addMarker btn btn-outline-primary col-md-2 m-2">+</button>
+                                <button className="removeMarker btn btn-outline-danger col-md-2 m-2">-</button>
+                                <button className="clear btn btn-warning col-md-4 m-2">clear</button>
+                            </div>
+                    </div>
+                    <div ref={mapContainer} onClick={addCountryMarker} className="map-container" />
 
-    }
-export default connect(mapStateToProps)(Earth)
+                </div>
+                )
+                
+            }
+            
+            const mapStateToProps = (state) =>{
+                return{
+                    token: state.mapReducer.mapBoxToken,
+                    longitude: state.mapReducer.initialViewPoint.longitude,
+                    latitude: state.mapReducer.initialViewPoint.latitude,
+                    zoomRatio: state.mapReducer.initialViewPoint.zoom
+            }
+            
+        }
+        export default connect(mapStateToProps)(Earth)
         
 
