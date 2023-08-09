@@ -25,8 +25,8 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
             zoom: Zoom
         })
         map.current.on('move',()=>{
-            setLat(map.current.getCenter().lat.toFixed(4));
-            setLng(map.current.getCenter().lng.toFixed(4));
+            setLat(map.current.getCenter().lat.toFixed(6));
+            setLng(map.current.getCenter().lng.toFixed(6));
             })
             
     })
