@@ -32,9 +32,17 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
     })
 
         return(
-            <div>
-                <p>{lat}, {lng}</p>     
+            <div className="row">
+                    <div className="card">
+                        <div className="overlay">
+                            <h2>Location</h2>
+                            <hr/>
+                            <p>Longitude: {lng}</p>
+                            <p>Latitude: {lat}</p>
+                        </div>
+                </div>
                 <div ref={mapContainer} className="map-container" />
+
             </div>
             )
             
