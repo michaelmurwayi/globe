@@ -25,8 +25,8 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
             zoom: Zoom
         })
         map.current.on('move',()=>{
-            setLat(map.current.getCenter().lat.toFixed());
-            setLng(map.current.getCenter().lng.toFixed());
+            setLat(map.current.getCenter().lat.toFixed(4));
+            setLng(map.current.getCenter().lng.toFixed(4));
             })
             
     })
@@ -37,8 +37,8 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
                         <div className="overlay">
                             <h2>Location</h2>
                             <hr/>
-                            <p>Longitude: {lng}</p>
-                            <p>Latitude: {lat}</p>
+                            <p>Longitude: <b>{lng}</b> </p>
+                            <p>Latitude: <b>{lat}</b> </p>
                         </div>
                 </div>
                 <div ref={mapContainer} className="map-container" />
