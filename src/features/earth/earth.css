@@ -29,6 +29,10 @@
     text-align: center;
     background-color: rgba(0, 0, 0, 0.9);
     color: white;
+    border-radius: 25px;  
+}
 
-    
+.btn-warning{
+    color: black;
+    border-radius: 25px 25px 0px 0px;
 }

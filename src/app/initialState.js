@@ -4,7 +4,7 @@ const initialState = {
     initialViewPoint: {
         latitude: "-1.04896",
         longitude: "37.05749",
-        zoom:"3",
+        zoom:"2",
     }
 }
 

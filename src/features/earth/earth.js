@@ -15,7 +15,11 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
     const [lat, setLat] = useState(latitude);
     const [Zoom, setZoom] = useState(zoomRatio);
     
-    const [cursorClass, setCursorClass] = useState('')
+    const [cursorClass, setCursorClass] = useState('btn')
+    const [location, setLocation] = useState({
+        latitude: '',
+        longitude: ''
+    })
 
 
     useEffect(()=>{
@@ -26,18 +30,29 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
             center: [lng, lat],
             zoom: Zoom
         })
-        map.current.on('move',()=>{
-            setLat(map.current.getCenter().lat.toFixed(6));
-            setLng(map.current.getCenter().lng.toFixed(6));
+        map.current.on('load', ()=>{
+            map.current.addSource('countries', {
+                'type': 'geojson',
+                'data': 'https://docs.mapbox.com/mapbox-gl-js/assets/us_states.geojson'
+            })
+            map.current.on('move',()=>{
+                setLat(map.current.getCenter().lat.toFixed(6));
+                setLng(map.current.getCenter().lng.toFixed(6));
             })
             
+        map.current.on('mousemove', (e) =>{
+            // create new Location
+            const currentLocation = {...location, latitude: e.lngLat.lat, longitude: e.lngLat.lng}
+            setLocation(currentLocation)
+            console.log(currentLocation)
+        })
+        
     })
-
+    })  
     
-    
-    const addCountryMarker = (e)=>{
+        const addCountryMarker = (e)=>{
             if(!map) return;
-            setCursorClass = 'pin-cursor'
+            setCursorClass(cursorClass === 'btn' ? 'btn btn-warning' : 'btn');
         }
         
             return(
@@ -52,12 +67,12 @@ function Earth ({token, longitude, latitude, zoomRatio}) {
                     </div>
                     <div className="card-2">
                             <div className="functionality row">
-                                <button className="addMarker btn btn-outline-primary col-md-2 m-2">+</button>
-                                <button className="removeMarker btn btn-outline-danger col-md-2 m-2">-</button>
-                                <button className="clear btn btn-warning col-md-4 m-2">clear</button>
+                                <button className={cursorClass} onClick={addCountryMarker}>Add Marker</button>
+                                <button className="removeMarker btn btn-white ">Clear</button>
+                                <button className="clear btn">Remove Marker </button>
                             </div>
                     </div>
-                    <div ref={mapContainer} onClick={addCountryMarker} className="map-container" />
+                    <div ref={mapContainer} className="map-container" />
 
                 </div>
                 )
